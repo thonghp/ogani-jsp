@@ -5,6 +5,7 @@
 - JSP/Servlet
 - Hibernate
 - MySQL
+- Junit 5
 
 ## Database
 
