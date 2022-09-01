@@ -5,7 +5,7 @@
     <!-- navigation -->
     <nav class="navbar navbar-expand-lg bg-light navbar-light">
         <!-- logo -->
-        <a href="/" class="navbar-brand">
+        <a href="" class="navbar-brand">
             <img src="../images/logo.png" alt="">
         </a>
         <!-- toggle -->
@@ -20,15 +20,15 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Người dùng</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="">Tạo mới</a>
-                        <a class="dropdown-item" href="">Xem tất cả</a>
+                        <a class="dropdown-item" href="list_users">Xem tất cả</a>
                     </div>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Thể loại</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Thể loại</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="">Tạo mới</a>
-                        <a class="dropdown-item" href="">Xem tất cả</a>
+                        <a class="dropdown-item" href="list_categories">Xem tất cả</a>
                     </div>
                 </li>
 
@@ -36,20 +36,20 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Sách</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="">Tạo mới</a>
-                        <a class="dropdown-item" href="">Xem tất cả</a>
+                        <a class="dropdown-item" href="list_books">Xem tất cả</a>
                     </div>
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">Khách Hàng</a>
+                    <a href="list_customers" class="nav-link">Khách Hàng</a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">Review</a>
+                    <a href="list_reviews" class="nav-link">Review</a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">Order</a>
+                    <a href="list_orders" class="nav-link">Order</a>
                 </li>
 
                 <li class="nav-item dropdown">
