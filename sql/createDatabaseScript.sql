@@ -1,30 +1,36 @@
 CREATE
-DATABASE `bookstoredb`;
+    DATABASE `bookstoredb`;
 
 USE
-`bookstoredb`;
+    `bookstoredb`;
 
 CREATE TABLE `users`
 (
-    `user_id`   int(11) NOT NULL AUTO_INCREMENT,
+    `user_id`   int(11)     NOT NULL AUTO_INCREMENT,
     `email`     varchar(30) NOT NULL,
     `password`  varchar(16) NOT NULL,
     `full_name` varchar(30) NOT NULL,
     PRIMARY KEY (`user_id`),
     UNIQUE KEY `user_id_UNIQUE` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 19
+  DEFAULT CHARSET = utf8;
 
 CREATE TABLE `category`
 (
-    `category_id` int(11) NOT NULL AUTO_INCREMENT,
-    `name`        varchar(30) NOT NULL,
+    `category_id` int          NOT NULL AUTO_INCREMENT,
+    `name`        varchar(128) NOT NULL,
+    `alias`       varchar(256) NOT NULL,
+    `enabled`     bit(1)       NOT NULL,
     PRIMARY KEY (`category_id`),
     UNIQUE KEY `category_id_UNIQUE` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 11
+  DEFAULT CHARSET = utf8mb3;
 
 CREATE TABLE `book`
 (
-    `book_id`          int(11) NOT NULL AUTO_INCREMENT,
+    `book_id`          int(11)      NOT NULL AUTO_INCREMENT,
     `title`            varchar(128) NOT NULL,
     `author`           varchar(64)  NOT NULL,
     `description`      mediumtext   NOT NULL,
@@ -33,18 +39,20 @@ CREATE TABLE `book`
     `price`            float        NOT NULL,
     `publish_date`     date         NOT NULL,
     `last_update_time` datetime     NOT NULL,
-    `category_id`      int(11) NOT NULL,
+    `category_id`      int(11)      NOT NULL,
     PRIMARY KEY (`book_id`),
     UNIQUE KEY `book_id_UNIQUE` (`book_id`),
     UNIQUE KEY `title_UNIQUE` (`title`),
-    KEY                `category_fk_idx` (`category_id`),
+    KEY `category_fk_idx` (`category_id`),
     CONSTRAINT `category_fk` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 32
+  DEFAULT CHARSET = utf8;
 
 
 CREATE TABLE `customer`
 (
-    `customer_id`   int(11) NOT NULL AUTO_INCREMENT,
+    `customer_id`   int(11)      NOT NULL AUTO_INCREMENT,
     `email`         varchar(64)  NOT NULL,
     `fullname`      varchar(30)  NOT NULL,
     `address`       varchar(128) NOT NULL,
@@ -57,30 +65,34 @@ CREATE TABLE `customer`
     PRIMARY KEY (`customer_id`),
     UNIQUE KEY `customer_id_UNIQUE` (`customer_id`),
     UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 11
+  DEFAULT CHARSET = utf8;
 
 
 CREATE TABLE `review`
 (
-    `review_id`   int(11) NOT NULL AUTO_INCREMENT,
-    `book_id`     int(11) NOT NULL,
-    `customer_id` int(11) NOT NULL,
-    `rating`      int(11) NOT NULL,
+    `review_id`   int(11)      NOT NULL AUTO_INCREMENT,
+    `book_id`     int(11)      NOT NULL,
+    `customer_id` int(11)      NOT NULL,
+    `rating`      int(11)      NOT NULL,
     `headline`    varchar(128) NOT NULL,
     `comment`     varchar(500) NOT NULL,
     `review_time` datetime     NOT NULL,
     PRIMARY KEY (`review_id`),
     UNIQUE KEY `review_id_UNIQUE` (`review_id`),
-    KEY           `book_fk_idx` (`book_id`),
-    KEY           `customer_fk_idx` (`customer_id`),
+    KEY `book_fk_idx` (`book_id`),
+    KEY `customer_fk_idx` (`customer_id`),
     CONSTRAINT `book_fk` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT `customer_fk` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 15
+  DEFAULT CHARSET = utf8;
 
 CREATE TABLE `book_order`
 (
-    `order_id`         int(11) NOT NULL AUTO_INCREMENT,
-    `customer_id`      int(11) NOT NULL,
+    `order_id`         int(11)      NOT NULL AUTO_INCREMENT,
+    `customer_id`      int(11)      NOT NULL,
     `order_date`       datetime     NOT NULL,
     `shipping_address` varchar(256) NOT NULL,
     `recipient_name`   varchar(30)  NOT NULL,
@@ -90,18 +102,21 @@ CREATE TABLE `book_order`
     `status`           varchar(20)  NOT NULL,
     PRIMARY KEY (`order_id`),
     UNIQUE KEY `order_id_UNIQUE` (`order_id`),
-    KEY                `customer_fk_2_idx` (`customer_id`),
+    KEY `customer_fk_2_idx` (`customer_id`),
     CONSTRAINT `customer_fk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 22
+  DEFAULT CHARSET = utf8;
 
 CREATE TABLE `order_detail`
 (
     `order_id` int(11) DEFAULT NULL,
     `book_id`  int(11) DEFAULT NULL,
     `quantity` int(11) NOT NULL,
-    `subtotal` float NOT NULL,
-    KEY        `order_fk_idx` (`order_id`),
-    KEY        `book_fk_2_idx` (`book_id`),
+    `subtotal` float   NOT NULL,
+    KEY `order_fk_idx` (`order_id`),
+    KEY `book_fk_2_idx` (`book_id`),
     CONSTRAINT `book_fk_2` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT `order_fk` FOREIGN KEY (`order_id`) REFERENCES `book_order` (`order_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;

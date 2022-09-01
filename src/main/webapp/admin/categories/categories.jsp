@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Danh sách thể loại - OGANI Admin</title>
+    <title>Quản lý thể loại - OGANI Admin</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
 
@@ -35,7 +35,7 @@
 
             Tìm Kiếm: &nbsp;
             <input type="search" name="keyword" class="form-control" required
-                   placeholder="Tìm kiếm sản phẩm mong muốn" size="60%"/>
+                   placeholder="Tìm kiếm thể loại mong muốn" size="60%"/>
             &nbsp;&nbsp;
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-search"></i>
