@@ -27,7 +27,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown">Thể loại</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="">Tạo mới</a>
+                        <a class="dropdown-item" href="list_categories/add">Tạo mới</a>
                         <a class="dropdown-item" href="list_categories">Xem tất cả</a>
                     </div>
                 </li>

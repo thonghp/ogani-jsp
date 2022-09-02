@@ -709,6 +709,7 @@ ol {
     border-radius: 50%;
     float: left;
     margin-right: 20px;
+    padding: 16px 18px;
 }
 
 .hero__search__phone__text {

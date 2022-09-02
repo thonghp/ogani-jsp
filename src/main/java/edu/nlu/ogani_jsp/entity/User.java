@@ -11,6 +11,8 @@ public class User {
     private String password;
     private String fullName;
     private boolean enabled;
+    private String photos;
+    private Role role;
 
     @Id
     @Column(name = "user_id")
@@ -56,5 +58,24 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @Column(length = 64)
+    public String getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photos) {
+        this.photos = photos;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id",nullable = false)
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
