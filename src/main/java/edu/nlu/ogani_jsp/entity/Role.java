@@ -1,10 +1,9 @@
 package edu.nlu.ogani_jsp.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "role")
 public class Role {
     private Integer roleId;
     private String name;
@@ -27,5 +26,10 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" + "roleId=" + roleId + ", name='" + name + '\'' + '}';
     }
 }
