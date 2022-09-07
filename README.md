@@ -3,9 +3,9 @@
 ## Technologies used in the project
 
 - JSP/Servlet
-- Hibernate
+- JDBC
 - MySQL
-- Junit 5
+- Junit 4
 
 ## Database
 
