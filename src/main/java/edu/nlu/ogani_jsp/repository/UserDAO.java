@@ -69,8 +69,8 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
     }
 
     @Override
-    public Iterable<User> findAll() {
-        List<User> iterable = new ArrayList<>();
+    public List<User> findAll() {
+        List<User> users = new ArrayList<>();
         String sql = "select * from user u inner join role r on u.role_id = r.role_id";
 
         try (Connection conn = DBUtil.makeConnection();
@@ -87,14 +87,14 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
 
                     User user = new User(id, email, password, fullName, enabled, photos, role);
 
-                    iterable.add(user);
+                    users.add(user);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return iterable;
+        return users;
     }
 
     @Override

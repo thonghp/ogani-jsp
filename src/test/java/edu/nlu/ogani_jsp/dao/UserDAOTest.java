@@ -4,8 +4,9 @@ import edu.nlu.ogani_jsp.entity.User;
 import edu.nlu.ogani_jsp.repository.UserDAO;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class UserDAOTest {
 
@@ -28,5 +29,12 @@ public class UserDAOTest {
         User user = userDAO.findById(id);
 
         assertNull(user);
+    }
+
+    @Test
+    public void testFindAll() {
+        List<User> users = userDAO.findAll();
+
+        assertTrue(users.size() > 0);
     }
 }
