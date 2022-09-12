@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO implements Repository<User, Integer>, Serializable {
     private static UserDAO instance;
@@ -68,7 +70,31 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
 
     @Override
     public Iterable<User> findAll() {
-        return null;
+        List<User> iterable = new ArrayList<>();
+        String sql = "select * from user u inner join role r on u.role_id = r.role_id";
+
+        try (Connection conn = DBUtil.makeConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    Integer id = rs.getInt("user_id");
+                    String email = rs.getString("email");
+                    String password = rs.getString("password");
+                    String fullName = rs.getString("full_name");
+                    boolean enabled = rs.getBoolean("enabled");
+                    String photos = rs.getString("photos");
+                    Role role = new Role(rs.getInt("role_id"), rs.getString("name"));
+
+                    User user = new User(id, email, password, fullName, enabled, photos, role);
+
+                    iterable.add(user);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return iterable;
     }
 
     @Override
