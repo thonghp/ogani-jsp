@@ -1,111 +1,32 @@
 package edu.nlu.ogani_jsp.dao;
 
 import edu.nlu.ogani_jsp.entity.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import edu.nlu.ogani_jsp.repository.UserDAO;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class UserDAOTest {
 
-    private static EntityManagerFactory entityManagerFactory;
-    private static EntityManager entityManager;
-    private static UserDAO userDAO;
-    private static RoleDAO roleDAO;
+    private UserDAO userDAO = UserDAO.getInstance();
 
-    @BeforeClass
-    public static void beforeAll() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("BookStoreWebsite");
-        entityManager = entityManagerFactory.createEntityManager();
+    @Test
+    public void testFindById() {
+        Integer id = 1;
 
-        userDAO = new UserDAO(entityManager);
-        roleDAO = new RoleDAO(entityManager);
+        User user = userDAO.findById(id);
+
+        assertEquals("email", "admin1@gmail.com", user.getEmail());
+        assertEquals("role_name", "admin", user.getRole().getName());
     }
 
     @Test
-    public void testCreateUser() {
-        User user = new User();
-        user.setEmail("thong@gmail.com");
-        user.setPassword("thong123");
-        user.setFullName("hoàng phạm thông");
-        user.setEnabled(true);
-        user.setRole(roleDAO.get(2));
+    public void testNotFindById() {
+        Integer id = 999;
 
-        user = userDAO.create(user);
+        User user = userDAO.findById(id);
 
-        assertTrue(user.getUserId() > 0);
-    }
-
-    @Test(expected = PersistenceException.class)
-    public void testCreateUserFieldsNotSet() {
-        User user = new User();
-        userDAO.create(user);
-    }
-
-    @Test(expected = PersistenceException.class)
-    public void testCreateUserWithMissingField() {
-        User user = new User();
-        user.setEmail("admin1@gmail.com");
-        user.setPassword("admin123");
-//        user.setFullName("admin"); assumption is missing
-        user.setEnabled(true);
-        user.setRole(roleDAO.get(1));
-
-        userDAO.create(user);
-    }
-
-    @Test(expected = PersistenceException.class)
-    public void testCreateUserWithDuplicateEmail() {
-        User user = new User();
-        user.setEmail("thong@gmail.com");
-        user.setPassword("thong123");
-        user.setFullName("hoàng phạm thái");
-        user.setEnabled(true);
-        user.setRole(roleDAO.get(2));
-
-        userDAO.create(user);
-    }
-
-    @Test
-    public void testFindByUser() {
-        Integer userId = 1;
-        User user = userDAO.get(userId);
-        assertNotNull(user);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUserNotFound() {
-        Integer userId = 99999;
-        User user = userDAO.get(userId);
         assertNull(user);
-    }
-
-    @Test
-    public void testUpdateUser() {
-        Integer userId = 3;
-        User user = userDAO.get(userId);
-        user.setFullName("hoàng thông");
-        user = userDAO.update(user);
-
-        assertEquals("hoàng thông", user.getFullName());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateUserWithAnInvalidId() {
-        Integer userId = 99999;
-        User user = userDAO.get(userId);
-        user.setFullName("admin");
-        user = userDAO.update(user);
-    }
-
-    @AfterClass
-    public static void afterAll() {
-        entityManager.close();
-        entityManagerFactory.close();
     }
 }
