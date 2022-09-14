@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,22 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
 
     @Override
     public User save(User user) {
+        String sql = "insert into user " + "(email, password, full_name, enabled, photos, role_id) " + "value(?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBUtil.makeConnection();
+             PreparedStatement stm = conn.prepareStatement(sql)) {
+            stm.setString(1, user.getEmail());
+            stm.setString(2, user.getPassword());
+            stm.setString(3, user.getFullName());
+            stm.setBoolean(4, user.isEnabled());
+            stm.setString(5, user.getPhotos());
+            stm.setInt(6, user.getRole().getRoleId());
+
+            if (stm.executeUpdate() > 0) return findByEmail(user.getEmail());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
@@ -100,5 +117,31 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
     @Override
     public long count() {
         return 0;
+    }
+
+    public User findByEmail(String email) {
+        String sql = "select * from user u inner join role r on u.role_id = r.role_id where u.email = ?";
+
+        try (Connection conn = DBUtil.makeConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    Integer id = rs.getInt("user_id");
+                    String password = rs.getString("password");
+                    String fullName = rs.getString("full_name");
+                    boolean enabled = rs.getBoolean("enabled");
+                    String photos = rs.getString("photos");
+                    Role role = new Role(rs.getInt("role_id"), rs.getString("name"));
+
+                    return new User(id, email, password, fullName, enabled, photos, role);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
