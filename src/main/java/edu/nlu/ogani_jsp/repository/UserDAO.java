@@ -75,10 +75,10 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
         String sql = "select * from user u inner join role r on u.role_id = r.role_id where u.user_id = ?";
 
         try (Connection conn = DBUtil.makeConnection();
-             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
-            preparedStatement.setInt(1, id);
+             PreparedStatement stm = conn.prepareStatement(sql)) {
+            stm.setInt(1, id);
 
-            try (ResultSet rs = preparedStatement.executeQuery()) {
+            try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     String email = rs.getString("email");
                     String password = rs.getString("password");
@@ -99,7 +99,16 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
 
     @Override
     public void delete(Integer id) {
+        String sql = "delete from user where user_id = ?";
 
+        try (Connection conn = DBUtil.makeConnection();
+             PreparedStatement stm = conn.prepareStatement(sql)) {
+            stm.setInt(1, id);
+
+            stm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

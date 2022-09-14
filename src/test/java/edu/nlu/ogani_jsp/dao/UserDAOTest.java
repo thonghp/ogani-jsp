@@ -81,4 +81,15 @@ public class UserDAOTest {
 
         assertEquals("admin2@gmail.com", user.getEmail());
     }
+
+    @Test
+    public void testDeleteUser() {
+        Integer id = 1;
+
+        userDAO.delete(id);
+
+        User user = userDAO.findById(id);
+
+        assertNull(user);
+    }
 }
