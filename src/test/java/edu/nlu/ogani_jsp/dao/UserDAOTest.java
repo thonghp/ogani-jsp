@@ -48,6 +48,24 @@ public class UserDAOTest {
     }
 
     @Test
+    public void testFindUserByEmail() {
+        String email = "admin1@gmail.com";
+
+        User user = userDAO.findByEmail(email);
+
+        assertNotNull(user);
+    }
+
+    @Test
+    public void testNotFindUserByEmail() {
+        String email = "hello@gmail.com";
+
+        User user = userDAO.findByEmail(email);
+
+        assertNull(user);
+    }
+
+    @Test
     public void testListAllUsers() {
         List<User> users = userDAO.findAll();
 
