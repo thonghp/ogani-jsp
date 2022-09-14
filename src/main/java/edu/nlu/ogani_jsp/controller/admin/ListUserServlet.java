@@ -22,7 +22,7 @@ public class ListUserServlet extends HttpServlet {
         List<User> users = service.listUser();
         request.setAttribute("listUsers", users);
 
-        String listPage = "users/users.jsp";
+        String listPage = "users.jsp";
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
         requestDispatcher.forward(request, response);
