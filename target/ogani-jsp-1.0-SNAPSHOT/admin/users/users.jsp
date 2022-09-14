@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Quản lý nhân viên - OGANI Admin</title>
@@ -75,51 +76,56 @@
 
             <!-- load user list -->
             <tbody>
-            <tr th:each="user: ${listUsers}">
-                <td>1</td>
-                <td>
-                    <span class="fas fa-portrait fa-3x icon-silver"></span>
-                </td>
-                <td>admin@gmail.com</td>
-                <td>hoàng phạm thông</td>
-                <td>
-                    <a class="fas fa-check-circle fa-2x icon-green" href="" title="Vô hiệu hóa"></a>
-                </td>
-                <td>
-                    <a class="fas fa-edit fa-2x icon-green" href="" title="Chỉnh sửa id 1"></a>
-                    <a class="fas fa-trash fa-2x icon-dark link-delete" href="" title="Xoá id 1"></a>
-                </td>
-            </tr>
+            <c:forEach var="user" items="${listUsers}">
+                <tr>
+                    <td>${user.userId}</td>
+                    <td>
+                        <span class="fas fa-portrait fa-3x icon-silver"></span>
+                    </td>
+                    <td>${user.email}</td>
+                    <td>${user.fullName}</td>
+                    <td>
+                        <a class="fas fa-check-circle fa-2x icon-green" href="" title="Vô hiệu hóa"></a>
+                    </td>
+                    <td>
+                        <a class="fas fa-edit fa-2x icon-green" href="" title="Chỉnh sửa id 1"></a>
+                        <a class="fas fa-trash fa-2x icon-dark link-delete" href="" title="Xoá id 1"></a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>
 
     <!-- responsive table -->
     <div class="less-details">
-        <div th:each="user: ${listUsers}" class="row m-1">
-            <div class="col-4">
-                <span class="fas fa-portrait fa-3x icon-silver"></span>
-            </div>
-            <div class="col-8">
-                <div>admin@gmail.com</div>
-                <div>hoàng phạm thông</div>
-                <div>
-                    <a class="fas fa-check-circle fa-2x icon-green" href="" title="Vô hiệu hóa"></a>
-                    &nbsp;
-                    <a class="fas fa-edit fa-2x icon-green" href="" title="Chỉnh sửa id 1"></a>
-                    &nbsp;
-                    <a class="fas fa-trash fa-2x icon-dark link-delete" href="" title="Xoá id 1"></a>
+        <c:forEach var="user" items="${listUsers}">
+            <div class="row m-1">
+                <div class="col-4">
+                    <span class="fas fa-portrait fa-3x icon-silver"></span>
                 </div>
+                <div class="col-8">
+                    <td>${user.email}</td>
+                    <td>${user.fullName}</td>
+                    <div>
+                        <a class="fas fa-check-circle fa-2x icon-green" href="" title="Vô hiệu hóa"></a>
+                        &nbsp;
+                        <a class="fas fa-edit fa-2x icon-green" href="" title="Chỉnh sửa id 1"></a>
+                        &nbsp;
+                        <a class="fas fa-trash fa-2x icon-dark link-delete" href="" title="Xoá id 1"></a>
+                    </div>
+                </div>
+                <div>&nbsp;</div>
             </div>
-            <div>&nbsp;</div>
-        </div>
+        </c:forEach>
     </div>
 
     <%-- pagination --%>
     <jsp:include page="../pagination.jsp"/>
 
     <!-- confirm modal -->
-    <<jsp:include page="../confirm_modal.jsp"/>
+    <
+    <jsp:include page="../confirm_modal.jsp"/>
 
     <!-- footer -->
     <jsp:include page="../footer.jsp"/>
