@@ -46,7 +46,7 @@
                 <i class="fas fa-eraser"></i>
             </button>
             &nbsp;&nbsp;&nbsp;
-            <a href="" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
+            <a href="users/user_form.jsp" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
             &nbsp;&nbsp;
             <a href="" class="fas fa-file-csv fa-2x mr-2" style="color: #007c01"></a>
             &nbsp;&nbsp;
