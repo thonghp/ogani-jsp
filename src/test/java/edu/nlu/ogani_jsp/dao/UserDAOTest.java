@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 
 public class UserDAOTest {
 
-    private UserDAO userDAO = UserDAO.getInstance();
-    private RoleDAO roleDAO = RoleDAO.getInstance();
+    private final UserDAO userDAO = UserDAO.getInstance();
+    private final RoleDAO roleDAO = RoleDAO.getInstance();
 
     @Test
     public void testCreateUser() {
@@ -97,6 +97,6 @@ public class UserDAOTest {
     public void testCount() {
         long totalUsers = userDAO.count();
 
-        assertTrue(totalUsers == 2);
+        assertEquals(2, totalUsers);
     }
 }
