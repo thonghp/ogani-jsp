@@ -92,4 +92,11 @@ public class UserDAOTest {
 
         assertNull(user);
     }
+
+    @Test
+    public void testCount() {
+        long totalUsers = userDAO.count();
+
+        assertTrue(totalUsers == 2);
+    }
 }

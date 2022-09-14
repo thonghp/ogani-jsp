@@ -117,8 +117,8 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
         String sql = "select * from user u inner join role r on u.role_id = r.role_id";
 
         try (Connection conn = DBUtil.makeConnection();
-             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
-            try (ResultSet rs = preparedStatement.executeQuery()) {
+             PreparedStatement stm = conn.prepareStatement(sql)) {
+            try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     Integer id = rs.getInt("user_id");
                     String email = rs.getString("email");
@@ -142,6 +142,18 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
 
     @Override
     public long count() {
+        String sql = "select count(*) from user;";
+
+        try (Connection conn = DBUtil.makeConnection();
+             PreparedStatement stm = conn.prepareStatement(sql)) {
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next())
+                    return rs.getLong(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return 0;
     }
 
