@@ -71,4 +71,14 @@ public class UserDAOTest {
 
         assertTrue(users.size() > 0);
     }
+
+    @Test
+    public void testUpdateUser() {
+        User user = userDAO.findById(2);
+        user.setEmail("admin2@gmail.com");
+
+        user = userDAO.update(user);
+
+        assertEquals("admin2@gmail.com", user.getEmail());
+    }
 }

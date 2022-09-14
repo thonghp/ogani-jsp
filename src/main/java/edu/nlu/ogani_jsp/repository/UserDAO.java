@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
 
     }
 
-    // dở khi sử dụng trong multithread
+    // không hay khi sử dụng trong multithread vì chỉ có 1 instance tồn tại
     public static UserDAO getInstance() {
         if (instance == null)
             instance = new UserDAO();
@@ -29,7 +28,7 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
 
     @Override
     public User save(User user) {
-        String sql = "insert into user " + "(email, password, full_name, enabled, photos, role_id) " + "value(?, ?, ?, ?, ?, ?)";
+        String sql = "insert into user (email, password, full_name, enabled, photos, role_id) value(?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBUtil.makeConnection();
              PreparedStatement stm = conn.prepareStatement(sql)) {
@@ -50,6 +49,24 @@ public class UserDAO implements Repository<User, Integer>, Serializable {
 
     @Override
     public User update(User user) {
+        String sql = "update user set email = ?, password = ?, full_name = ?, enabled = ?, photos = ?, role_id = ? "
+                + "where user_id = ?";
+
+        try (Connection conn = DBUtil.makeConnection();
+             PreparedStatement stm = conn.prepareStatement(sql)) {
+            stm.setString(1, user.getEmail());
+            stm.setString(2, user.getPassword());
+            stm.setString(3, user.getFullName());
+            stm.setBoolean(4, user.isEnabled());
+            stm.setString(5, user.getPhotos());
+            stm.setInt(6, user.getRole().getRoleId());
+            stm.setInt(7, user.getUserId());
+
+            if (stm.executeUpdate() > 0) return findByEmail(user.getEmail());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
