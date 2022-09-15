@@ -87,7 +87,12 @@
                     <td>${user.fullName}</td>
                     <td>${user.role.name}</td>
                     <td>
-                        <a class="fas fa-check-circle fa-2x icon-green" href="" title="Vô hiệu hóa"></a>
+                        <c:if test="${user.enabled == true}">
+                            <a class="fas fa-check-circle fa-2x icon-green" href="" title="Vô hiệu hóa"></a>
+                        </c:if>
+                        <c:if test="${user.enabled == false}">
+                            <a class="fas fa-check-circle fa-2x icon-dark" href="" title="Kích hoạt"></a>
+                        </c:if>
                     </td>
                     <td>
                         <a class="fas fa-edit fa-2x icon-green" href="" title="Chỉnh sửa id 1"></a>

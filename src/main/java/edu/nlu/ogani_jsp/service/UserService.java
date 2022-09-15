@@ -16,9 +16,19 @@ public class UserService {
     private static final Integer EMPLOYEE_ROLE_ID = 2;
     private UserDAO userRepo = UserDAO.getInstance();
     private RoleDAO roleRepo = RoleDAO.getInstance();
+    private HttpServletRequest request;
+    private HttpServletResponse response;
 
-    public void listUser(HttpServletRequest request, HttpServletResponse response, String message)
-            throws ServletException, IOException {
+    public UserService(HttpServletRequest request, HttpServletResponse response) {
+        this.request = request;
+        this.response = response;
+    }
+
+    public void listUser() throws ServletException, IOException {
+        listUser(null);
+    }
+
+    public void listUser(String message) throws ServletException, IOException {
         List<User> users = userRepo.findAll();
 
         request.setAttribute("listUsers", users);
@@ -35,13 +45,13 @@ public class UserService {
         return roleRepo.findById(id);
     }
 
-    public User save(HttpServletRequest request) {
+    public User save() {
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         boolean enabled;
-        if (request.getParameter("enabled").equals("on")) {
+        if (!(request.getParameter("enabled") == null)) {
             enabled = true;
         } else {
             enabled = false;

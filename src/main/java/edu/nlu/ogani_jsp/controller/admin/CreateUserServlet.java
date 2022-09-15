@@ -19,10 +19,10 @@ public class CreateUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserService service = new UserService();
+        UserService service = new UserService(request, response);
 
-        service.save(request);
+        service.save();
 
-        service.listUser(request, response, "Nhân viên đã được thêm thành công !");
+        service.listUser("Nhân viên đã được thêm thành công !");
     }
 }
