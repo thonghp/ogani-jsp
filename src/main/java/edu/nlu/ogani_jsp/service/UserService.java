@@ -17,10 +17,14 @@ public class UserService {
     private UserDAO userRepo = UserDAO.getInstance();
     private RoleDAO roleRepo = RoleDAO.getInstance();
 
-    public void listUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void listUser(HttpServletRequest request, HttpServletResponse response, String message)
+            throws ServletException, IOException {
         List<User> users = userRepo.findAll();
 
         request.setAttribute("listUsers", users);
+
+        if (message != null)
+            request.setAttribute("message", message);
 
         String listPage = "users.jsp";
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);

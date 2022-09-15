@@ -55,9 +55,9 @@
             <a href="" class="fas fa-file-pdf fa-2x" style="color: #db0001"></a>
         </form>
 
-        <div class="alert alert-success text-center">
-            Thông báo này hiển thị khi thêm sửa xóa thành công
-        </div>
+        <c:if test="${message != null}">
+            <div class="alert alert-success text-center">${message}</div>
+        </c:if>
     </div>
 
     <!-- table -->

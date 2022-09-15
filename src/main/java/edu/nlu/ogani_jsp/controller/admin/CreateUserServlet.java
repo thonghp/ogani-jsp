@@ -23,6 +23,6 @@ public class CreateUserServlet extends HttpServlet {
 
         service.save(request);
 
-        service.listUser(request, response);
+        service.listUser(request, response, "Nhân viên đã được thêm thành công !");
     }
 }
