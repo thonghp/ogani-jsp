@@ -15,4 +15,13 @@ public class User {
     private boolean enabled;
     private String photos;
     private Role role;
+
+    public User(String email, String password, String fullName, boolean enabled, String photos, Role role) {
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.enabled = enabled;
+        this.photos = photos;
+        this.role = role;
+    }
 }
