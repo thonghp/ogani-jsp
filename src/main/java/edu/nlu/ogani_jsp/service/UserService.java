@@ -45,7 +45,8 @@ public class UserService {
         return roleRepo.findById(id);
     }
 
-    public User save() {
+    public User save() throws ServletException, IOException {
+        User user;
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -66,8 +67,20 @@ public class UserService {
 
         Role role = getRole(EMPLOYEE_ROLE_ID);
 
-        User user = new User(email, password, fullName, enabled, photos, role);
+        User existUser = userRepo.findByEmail(email);
 
-        return userRepo.save(user);
+        if (existUser != null) {
+            String message = "Không thể thêm mới nhân viên vì email " + email + " đã tồn tại!!!";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("user_form.jsp").forward(request, response);
+
+            user = null;
+        } else {
+            User newUser = new User(email, password, fullName, enabled, photos, role);
+            user = userRepo.save(newUser);
+            listUser("Nhân viên đã được thêm thành công !");
+        }
+
+        return user;
     }
 }

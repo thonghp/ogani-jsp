@@ -30,6 +30,8 @@
     </div>
     <!-- user form -->
 
+    <input type="hidden" value="${message}" id="emailExists"/>
+
     <form action="create_user" method="post" style="max-width: 700px; margin: 0 auto">
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">
@@ -66,14 +68,36 @@
 
             <div class="text-center">
                 <input type="submit" value="Save" class="btn btn-primary m-3"/>
-                <input type="button" value="Cancel" class="btn btn-secondary" onclick="javascript:history.back()">
+                <input type="button" value="Cancel" class="btn btn-secondary" id="btnCancel">
             </div>
         </div>
     </form>
+
+    <jsp:include page="modal_dialog.jsp"/>
 
     <!-- footer -->
     <jsp:include page="footer.jsp"/>
 
 </div>
+
+<script type="text/javascript">
+    function showModalDialog(title, message) {
+        $("#modalTitle").text(title);
+        $("#modalBody").text(message);
+        $("#modalDialog").modal();
+    }
+
+    const message = "${message}";
+    if (message !== "") {
+        showModalDialog("Warning", message)
+    }
+
+    $(document).ready(function () {
+        $("#btnCancel").on("click", function () {
+            window.location = "list_users";
+        });
+    });
+</script>
+
 </body>
 </html>
