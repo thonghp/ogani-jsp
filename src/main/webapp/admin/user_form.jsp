@@ -66,18 +66,18 @@
                 <input type="hidden" name="roleId" value="2"/>
 
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Trạng thái:</label>
-                    <div class="col-sm-8 mt-2">
+                    <label class="col-sm-4 col-form-label mt-1">Trạng thái:</label>
+                    <div class="col-sm-8 mt-3">
                         <c:if test="${user.enabled == true}">
                             <input type="checkbox" name="enabled" checked/>
                         </c:if>
-                        <c:if test="${user.enabled == false}">
+                        <c:if test="${user.enabled == false || user == null}">
                             <input type="checkbox" name="enabled"/>
                         </c:if>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Hình ảnh:</label>
+                    <label class="col-sm-4 col-form-label mt-3">Hình ảnh:</label>
                     <div class="col-sm-8">
                         <c:if test="${user.photos == null}">
                             <input type="file" id="fileImage" accept="image/png, image/jpeg" class="mb-2"
