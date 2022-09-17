@@ -2,7 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Thêm nhân viên</title>
+
+    <c:if test="${title != null}"><title>${title}</title></c:if>
+    <c:if test="${title == null}"><title>Thêm nhân viên</title></c:if>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
 
@@ -25,58 +28,81 @@
     <jsp:include page="header.jsp"/>
 
     <!-- user form -->
-    <div class="m-5 text-center">
-        <h2>Thêm thành viên</h2>
+    <div class="m-3 text-center">
+        <c:if test="${title != null}"><h2>${title}</h2></c:if>
+        <c:if test="${title == null}"><h2>Thêm nhân viên</h2></c:if>
     </div>
     <!-- user form -->
 
-    <input type="hidden" value="${message}" id="emailExists"/>
+    <c:if test="${user.userId != null}">
+    <form action="update_user" method="post" style="max-width: 700px; margin: 0 auto">
+        <input type="hidden" name="userId" value="${user.userId}">
+        </c:if>
 
-    <form action="create_user" method="post" style="max-width: 700px; margin: 0 auto">
-        <div class="border border-secondary rounded p-3">
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Họ và tên</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="fullName" required/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">E-mail</label>
-                <div class="col-sm-8">
-                    <input type="email" class="form-control" name="email" required/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Mật khẩu</label>
-                <div class="col-sm-8">
-                    <input type="password" class="form-control" name="password" required/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Trạng thái:</label>
-                <div class="col-sm-8 mt-2">
-                    <input type="checkbox" name="enabled" checked/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Hình ảnh:</label>
-                <div class="col-sm-8">
-                    <input type="file" id="fileImage" accept="image/png, image/jpeg" class="mb-2" name="photos"/>
-                    <img id="thumbnail" src="../images/image-thumbnail.png" alt="Photos preview" class="img-fluid"/>
-                </div>
-            </div>
+        <c:if test="${user.userId == null}">
+        <form action="create_user" method="post" style="max-width: 700px; margin: 0 auto">
+            </c:if>
 
-            <div class="text-center">
-                <input type="submit" value="Save" class="btn btn-primary m-3"/>
-                <input type="button" value="Cancel" class="btn btn-secondary" id="btnCancel">
+            <div class="border border-secondary rounded p-3">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Họ và tên</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="fullName" value="${user.fullName}" required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">E-mail</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control" name="email" value="${user.email}" required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Mật khẩu</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" name="password" value="${user.password}" required/>
+                    </div>
+                </div>
+
+                <input type="hidden" name="roleId" value="2"/>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-8 mt-2">
+                        <c:if test="${user.enabled == true}">
+                            <input type="checkbox" name="enabled" checked/>
+                        </c:if>
+                        <c:if test="${user.enabled == false}">
+                            <input type="checkbox" name="enabled"/>
+                        </c:if>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Hình ảnh:</label>
+                    <div class="col-sm-8">
+                        <c:if test="${user.photos == null}">
+                            <input type="file" id="fileImage" accept="image/png, image/jpeg" class="mb-2"
+                                   name="photos"/>
+                            <img id="thumbnail" src="../images/image-thumbnail.png" alt="Photos preview"
+                                 class="img-fluid"/>
+                        </c:if>
+                        <c:if test="${user.photos != null}">
+                            <input type="file" id="fileImage" accept="image/png, image/jpeg" class="mb-2" name="photos"
+                                   value="${user.photos}"/>
+                        </c:if>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <input type="submit" value="Save" class="btn btn-primary m-3"/>
+                    <input type="button" value="Cancel" class="btn btn-secondary" id="btnCancel">
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
 
-    <jsp:include page="modal_dialog.jsp"/>
+        <jsp:include page="modal_dialog.jsp"/>
 
-    <!-- footer -->
-    <jsp:include page="footer.jsp"/>
+        <!-- footer -->
+        <jsp:include page="footer.jsp"/>
 
 </div>
 

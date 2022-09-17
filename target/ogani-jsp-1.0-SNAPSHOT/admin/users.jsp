@@ -95,7 +95,8 @@
                         </c:if>
                     </td>
                     <td>
-                        <a class="fas fa-edit fa-2x icon-green" href="" title="Chỉnh sửa id 1"></a>
+                        <a class="fas fa-edit fa-2x icon-green" href="edit_user?id=${user.userId}"
+                           title="Chỉnh sửa"></a>
                         <a class="fas fa-trash fa-2x icon-dark link-delete" href="" title="Xoá id 1"></a>
                     </td>
                 </tr>
