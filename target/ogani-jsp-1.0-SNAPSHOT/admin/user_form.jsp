@@ -68,10 +68,10 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label mt-1">Trạng thái:</label>
                     <div class="col-sm-8 mt-3">
-                        <c:if test="${user.enabled == true}">
+                        <c:if test="${user.enabled == true|| user == null}">
                             <input type="checkbox" name="enabled" checked/>
                         </c:if>
-                        <c:if test="${user.enabled == false || user == null}">
+                        <c:if test="${user.enabled == false}">
                             <input type="checkbox" name="enabled"/>
                         </c:if>
                     </div>

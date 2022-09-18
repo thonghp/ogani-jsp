@@ -14,12 +14,12 @@ public class UpdateUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserService service = new UserService(request, response);
-        service.updateUser();
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        UserService service = new UserService(request, response);
+        service.updateUser();
     }
 }
