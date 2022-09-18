@@ -34,6 +34,15 @@
             <input type="hidden" name="sortField"/>
             <input type="hidden" name="sortType"/>
 
+            <a href="user_form.jsp" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
+            &nbsp;&nbsp;
+            <a href="" class="fas fa-file-csv fa-2x mr-2" style="color: #007c01"></a>
+            &nbsp;&nbsp;
+            <a href="" class="fas fa-file-excel fa-2x mr-2" style="color: #1e6b3f"></a>
+            &nbsp;&nbsp;
+            <a href="" class="fas fa-file-pdf fa-2x" style="color: #db0001"></a>
+            &nbsp;&nbsp;
+
             Tìm Kiếm: &nbsp;
             <input type="search" name="keyword" class="form-control" required
                    placeholder="Tìm kiếm nhân viên mong muốn" size="60%"/>
@@ -45,18 +54,10 @@
             <button type="button" class="btn btn-secondary" onclick="clearFilter()" title="Xoá">
                 <i class="fas fa-eraser"></i>
             </button>
-            &nbsp;&nbsp;&nbsp;
-            <a href="user_form.jsp" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
-            &nbsp;&nbsp;
-            <a href="" class="fas fa-file-csv fa-2x mr-2" style="color: #007c01"></a>
-            &nbsp;&nbsp;
-            <a href="" class="fas fa-file-excel fa-2x mr-2" style="color: #1e6b3f"></a>
-            &nbsp;&nbsp;
-            <a href="" class="fas fa-file-pdf fa-2x" style="color: #db0001"></a>
         </form>
 
         <c:if test="${message != null}">
-            <div class="alert alert-success text-center">${message}</div>
+            <div class="alert alert-success text-center" id="hideMessage">${message}</div>
         </c:if>
     </div>
 
@@ -97,7 +98,9 @@
                     <td>
                         <a class="fas fa-edit fa-2x icon-green" href="edit_user?id=${user.userId}"
                            title="Chỉnh sửa"></a>
-                        <a class="fas fa-trash fa-2x icon-dark link-delete" href="" title="Xoá id 1"></a>
+                        <a class="fas fa-trash fa-2x icon-dark"
+                           href="javascript:confirmDelete(${user.userId})"
+                           title="Xoá"></a>
                     </td>
                 </tr>
             </c:forEach>
@@ -131,25 +134,32 @@
     <%-- pagination --%>
     <jsp:include page="pagination.jsp"/>
 
-    <!-- confirm modal -->
-    <
-    <jsp:include page="confirm_modal.jsp"/>
-
     <!-- footer -->
     <jsp:include page="footer.jsp"/>
 
 </div>
 
 <script type="text/javascript">
-    moduleURL = "[[@{/users/}]]";
+    function clearFilter() {
+        window.location = 'list_users';
+    }
 
-    $(document).ready(function () {
-        $(".link-delete").on("click", function (e) {
-            e.preventDefault();
-            showDeleteConfirmModal($(this), 'người dùng');
-        });
-    });
+    const message = document.getElementById('hideMessage');
+
+    if (message !== null) {
+        function hideMessage() {
+            message.style.display = 'none';
+        }
+
+        setTimeout(hideMessage, 5000);
+    }
+
+    function confirmDelete(userId) {
+        let isConfirm = confirm('Bạn có muốn xóa nhân viên có id là ' + userId + ' không ?');
+        if (isConfirm) {
+            window.location = 'delete_user?id=' + userId;
+        }
+    }
 </script>
-<script src="js/common_list.js"></script>
 </body>
 </html>

@@ -89,11 +89,16 @@ public class UserService {
         Integer id = Integer.valueOf(request.getParameter("id"));
         User user = userRepo.findById(id);
 
-        request.setAttribute("user", user);
-        request.setAttribute("title", "Chỉnh sửa nhân viên (ID: " + id + ")");
+        if (user == null) {
+            String message = "Không tìm thấy nhân viên có id là " + id;
+            listUser(message);
+        } else {
+            request.setAttribute("user", user);
+            request.setAttribute("title", "Chỉnh sửa nhân viên (ID: " + id + ")");
 
-        String editPage = "user_form.jsp";
-        request.getRequestDispatcher(editPage).forward(request, response);
+            String editPage = "user_form.jsp";
+            request.getRequestDispatcher(editPage).forward(request, response);
+        }
     }
 
     public void updateUser() throws ServletException, IOException {
@@ -130,14 +135,39 @@ public class UserService {
             request.setAttribute("user", userById);
             request.setAttribute("title", "Chỉnh sửa nhân viên (ID: " + userById.getUserId() + ")");
 
-            String createPage = "user_form.jsp";
-            request.getRequestDispatcher(createPage).forward(request, response);
+            String updatePage = "user_form.jsp";
+            request.getRequestDispatcher(updatePage).forward(request, response);
         } else {
             User user = new User(userId, email, password, fullName, enabled, photos, role);
 
             userRepo.update(user);
 
             String message = "Nhân viên " + fullName + " đã được cập nhật thành công !";
+            listUser(message);
+        }
+    }
+
+    public void deleteUser() throws ServletException, IOException {
+        Integer id = Integer.valueOf(request.getParameter("id"));
+        User user = userRepo.findById(id);
+
+        String message;
+
+        if (id == 1 || id == 2) {
+            message = "Đây là tài khoản admin không thể xóa.";
+            request.setAttribute("message", message);
+            listUser(message);
+            
+            return;
+        }
+
+        if (user == null) {
+            message = "Không tìm thấy nhân viên có id là " + id + " hoặc nó có thể đã bị xóa !";
+            listUser(message);
+        } else {
+            userRepo.delete(id);
+
+            message = "Nhân viên có id là " + id + " đã được xóa thành công !";
             listUser(message);
         }
     }
