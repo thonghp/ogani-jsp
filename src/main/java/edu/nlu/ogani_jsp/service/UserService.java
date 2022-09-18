@@ -49,12 +49,7 @@ public class UserService {
         String password = request.getParameter("password");
         Integer roleId = Integer.valueOf(request.getParameter("roleId"));
 
-        boolean enabled;
-        if (!(request.getParameter("enabled") == null)) {
-            enabled = true;
-        } else {
-            enabled = false;
-        }
+        boolean enabled = !(request.getParameter("enabled") == null);
 
         String photos;
         if (request.getParameter("photos").isEmpty()) {
@@ -89,8 +84,17 @@ public class UserService {
         Integer id = Integer.valueOf(request.getParameter("id"));
         User user = userRepo.findById(id);
 
+        String message;
+        if (id == 1 || id == 2) {
+            message = "Đây là tài khoản admin không thể chỉnh sửa.";
+            request.setAttribute("message", message);
+            listUser(message);
+
+            return;
+        }
+
         if (user == null) {
-            String message = "Không tìm thấy nhân viên có id là " + id;
+            message = "Không tìm thấy nhân viên có id là " + id;
             listUser(message);
         } else {
             request.setAttribute("user", user);
@@ -109,12 +113,7 @@ public class UserService {
         String password = request.getParameter("password");
         Integer roleId = Integer.valueOf(request.getParameter("roleId"));
 
-        boolean enabled;
-        if (!(request.getParameter("enabled") == null)) {
-            enabled = true;
-        } else {
-            enabled = false;
-        }
+        boolean enabled = !(request.getParameter("enabled") == null);
 
         String photos;
         if (request.getParameter("photos").isEmpty()) {
@@ -128,8 +127,9 @@ public class UserService {
         User userById = userRepo.findById(userId);
         User userByEmail = userRepo.findByEmail(email);
 
+        String message;
         if (userByEmail != null && userByEmail.getUserId() != userById.getUserId()) {
-            String message = "Email " + email + " đã tồn tại!!!";
+            message = "Email " + email + " đã tồn tại!!!";
             request.setAttribute("message", message);
 
             request.setAttribute("user", userById);
@@ -142,7 +142,7 @@ public class UserService {
 
             userRepo.update(user);
 
-            String message = "Nhân viên " + fullName + " đã được cập nhật thành công !";
+            message = "Nhân viên " + fullName + " đã được cập nhật thành công !";
             listUser(message);
         }
     }
@@ -157,18 +157,17 @@ public class UserService {
             message = "Đây là tài khoản admin không thể xóa.";
             request.setAttribute("message", message);
             listUser(message);
-            
+
             return;
         }
 
         if (user == null) {
             message = "Không tìm thấy nhân viên có id là " + id + " hoặc nó có thể đã bị xóa !";
-            listUser(message);
         } else {
             userRepo.delete(id);
-
             message = "Nhân viên có id là " + id + " đã được xóa thành công !";
-            listUser(message);
         }
+
+        listUser(message);
     }
 }
