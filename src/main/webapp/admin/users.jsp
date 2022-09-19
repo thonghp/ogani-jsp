@@ -89,18 +89,17 @@
                     <td>${user.role.name}</td>
                     <td>
                         <c:if test="${user.enabled == true}">
-                            <a class="fas fa-check-circle fa-2x icon-green" href="" title="Vô hiệu hóa"></a>
+                            <a class="fas fa-check-circle fa-2x icon-green" title="Đang hoạt động"></a>
                         </c:if>
                         <c:if test="${user.enabled == false}">
-                            <a class="fas fa-check-circle fa-2x icon-dark" href="" title="Kích hoạt"></a>
+                            <a class="fas fa-check-circle fa-2x icon-dark" title="Bị vô hiệu hóa"></a>
                         </c:if>
                     </td>
                     <td>
                         <a class="fas fa-edit fa-2x icon-green" href="edit_user?id=${user.userId}"
                            title="Chỉnh sửa"></a>
                         <a class="fas fa-trash fa-2x icon-dark"
-                           href="javascript:confirmDelete(${user.userId})"
-                           title="Xoá"></a>
+                           href="javascript:confirmDelete(${user.userId})" title="Xoá"></a>
                     </td>
                 </tr>
             </c:forEach>
@@ -119,11 +118,19 @@
                     <td>${user.email}</td>
                     <td>${user.fullName}</td>
                     <div>
-                        <a class="fas fa-check-circle fa-2x icon-green" href="" title="Vô hiệu hóa"></a>
+                        <c:if test="${user.enabled == true}">
+                            <a class="fas fa-check-circle fa-2x icon-green" title="Đang hoạt động"></a>
+                        </c:if>
+                        <c:if test="${user.enabled == false}">
+                            <a class="fas fa-check-circle fa-2x icon-dark" title="Bị vô hiệu hóa"></a>
+                        </c:if>
                         &nbsp;
-                        <a class="fas fa-edit fa-2x icon-green" href="" title="Chỉnh sửa id 1"></a>
+                        <a class="fas fa-edit fa-2x icon-green" href="edit_user?id=${user.userId}"
+                           title="Chỉnh sửa"></a>
                         &nbsp;
-                        <a class="fas fa-trash fa-2x icon-dark link-delete" href="" title="Xoá id 1"></a>
+                        <a class="fas fa-trash fa-2x icon-dark"
+                           href="javascript:confirmDelete(${user.userId})"
+                           title="Xoá"></a>
                     </div>
                 </div>
                 <div>&nbsp;</div>
