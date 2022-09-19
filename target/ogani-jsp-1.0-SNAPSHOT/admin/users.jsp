@@ -98,8 +98,9 @@
                     <td>
                         <a class="fas fa-edit fa-2x icon-green" href="edit_user?id=${user.userId}"
                            title="Chỉnh sửa"></a>
-                        <a class="fas fa-trash fa-2x icon-dark"
-                           href="javascript:confirmDelete(${user.userId})" title="Xoá"></a>
+                        <a class="fas fa-trash fa-2x icon-dark link-delete" href="delete_user?id=${user.userId}"
+                           title="Xoá" entityId="${user.userId}"></a>
+                            <%--                           href="javascript:confirmDelete(${user.userId})" title="Xoá"></a>--%>
                     </td>
                 </tr>
             </c:forEach>
@@ -138,6 +139,8 @@
         </c:forEach>
     </div>
 
+    <jsp:include page="confirm_modal.jsp"/>
+
     <%-- pagination --%>
     <jsp:include page="pagination.jsp"/>
 
@@ -161,12 +164,20 @@
         setTimeout(hideMessage, 5000);
     }
 
-    function confirmDelete(userId) {
-        let isConfirm = confirm('Bạn có muốn xóa nhân viên có id là ' + userId + ' không ?');
-        if (isConfirm) {
-            window.location = 'delete_user?id=' + userId;
-        }
+    function showDeleteConfirmModal(link) {
+        entityId = link.attr("entityId");
+
+        $("#yesButton").attr("href", link.attr("href")); // set value of attribute
+        $("#confirmText").text("Bạn có muốn xoá nhân viên có id là " + entityId + " không ?");
+        $("#confirmModal").modal();
     }
+
+    $(document).ready(function () {
+        $(".link-delete").on("click", function (e) {
+            e.preventDefault();
+            showDeleteConfirmModal($(this));
+        });
+    });
 </script>
 </body>
 </html>
