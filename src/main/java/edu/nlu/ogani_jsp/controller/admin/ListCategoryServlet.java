@@ -1,6 +1,7 @@
 package edu.nlu.ogani_jsp.controller.admin;
 
-import javax.servlet.RequestDispatcher;
+import edu.nlu.ogani_jsp.service.CategoryService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,10 +14,9 @@ public class ListCategoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String homepage = "categories/categories.jsp";
+        CategoryService service = new CategoryService(request, response);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(homepage);
-        requestDispatcher.forward(request, response);
+        service.listCategory();
     }
 
     @Override
