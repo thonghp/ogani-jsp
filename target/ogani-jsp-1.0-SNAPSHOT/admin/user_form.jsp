@@ -30,7 +30,7 @@
     <!-- user form -->
     <div class="m-3 text-center">
         <c:if test="${title != null}"><h2>${title}</h2></c:if>
-        <c:if test="${title == null}"><h2>Thêm nhân viên</h2></c:if>
+        <c:if test="${title == null}"><h2>Thêm Nhân Viên</h2></c:if>
     </div>
     <!-- user form -->
 
