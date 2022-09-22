@@ -5,7 +5,7 @@
     <!-- navigation -->
     <nav class="navbar navbar-expand-lg bg-light navbar-light">
         <!-- logo -->
-        <a href="" class="navbar-brand">
+        <a href="/ogani_jsp/admin/" class="navbar-brand">
             <img src="../images/logo.png" alt="">
         </a>
         <!-- toggle -->
@@ -19,7 +19,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Nhân viên</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="">Tạo mới</a>
+                        <a class="dropdown-item" href="user_form.jsp">Tạo mới</a>
                         <a class="dropdown-item" href="list_users">Xem tất cả</a>
                     </div>
                 </li>
@@ -27,7 +27,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown">Thể loại</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="list_categories/add">Tạo mới</a>
+                        <a class="dropdown-item" href="category_form.jsp">Tạo mới</a>
                         <a class="dropdown-item" href="list_categories">Xem tất cả</a>
                     </div>
                 </li>
