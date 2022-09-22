@@ -100,7 +100,6 @@
                            title="Chỉnh sửa"></a>
                         <a class="fas fa-trash fa-2x icon-dark link-delete" href="delete_user?id=${user.userId}"
                            title="Xoá" entityId="${user.userId}"></a>
-                            <%--                           href="javascript:confirmDelete(${user.userId})" title="Xoá"></a>--%>
                     </td>
                 </tr>
             </c:forEach>
